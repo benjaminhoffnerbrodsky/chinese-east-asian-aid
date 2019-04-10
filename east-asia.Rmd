@@ -1,0 +1,38 @@
+---
+title: "Chinese Financial Public Diplomacy"
+author: "Benjamin Hoffner-Brodsky"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+
+library(scales)
+library(sf)
+library(tidyverse)
+
+east_asia <- read_csv("ChinasPublicDiplomacyinEastAsiaandPacific_v1.0.csv")
+
+```
+
+
+```{r graphic}
+
+countries <- east_asia %>% 
+  filter(receiving_country %in% c("Cambodia", "Indonesia", "Laos", "Vietnam"))
+
+ggplot(countries) +
+  geom_col(aes(x = year, y = financialpd_oof, fill = receiving_country)) +
+  facet_wrap(~receiving_country) + 
+  scale_y_continuous(labels = dollar) + 
+  labs(
+    title = "Total Financial Public Diplomacy from China during 2000-2016",
+    subtitle = "Budget Support, Humanitarian Assistance, Infrastructure Investments, and Debt Relief",
+    x = "",
+    y = "",
+    caption = "Data from AidData at William and Mary"
+  ) + 
+  theme_light() +
+  theme(legend.position = "none")
+```
+
